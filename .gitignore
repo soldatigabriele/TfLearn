@@ -1,0 +1,8 @@
+__pycache__/
+.DS_Store
+z_log_norm_fabio_100epochs/
+dataset/
+augment/
+log/
+models/
+typescript
