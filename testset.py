@@ -10,24 +10,11 @@ from random import shuffle
 from tqdm import tqdm
 
 
-
-TRAIN_DIR ='dataset/base/training/'
-# TRAIN_DIR ='dataset/base/trying/'
-TEST_DIR = 'dataset/base/test/'
+TEST_DIR = 'dataset/base/agosto/'
 DATASET_DIR='dataset/npy/'
+DATASET_NAME='agosto_data.npy'
 
 IMG_SIZE = 50
-
-# # 2D grayscale data
-# def label_img(img):
-#     #split the name by . and take the third negative (dog or cat):
-#     # dog . 93 . png 
-#     # [-3] [-2] [-1]
-#     word_label = img.split('.')[-3]
-#     # praticamente vado a creare le label in formato one_hot
-#     if word_label == 'cat': return [1,0]
-#     elif word_label == 'dog':return[0,1]
-
 
 def create_test_data():
     # cicla per tutte i file in train dir
@@ -73,49 +60,46 @@ def create_test_data():
                         test_data.append([np.array(img2), np.array(label)])
             
     shuffle(test_data)
-    np.save(os.path.join(DATASET_DIR,'test_data.npy'), test_data)
+    np.save(os.path.join(DATASET_DIR,DATASET_NAME), test_data)
     print('test data created')
     return test_data
 
-#plot the data
-fig = plt.figure()
 
 def verify(test_data):
+    #plot the data
+    fig = plt.figure()
     f = 0
     e = 0
     for num, data in enumerate(test_data[:]):
         # separate image from label
         img_data = data[0]
         img_num = data[1]
-        # print(img_data.shape)
-        # 3 by 4 and the numbur is the number plus 1 (because array starts from 0)
-        if num < 20:
-            y = fig.add_subplot(4,5,num+1)
-            orig = img_data
-            # restore the image shape
-            data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
         
         if img_num[0] == 0: 
             label='full' 
             f = f + 1
+            if f < 20:
+                y = fig.add_subplot(4,5,f+1)
+                orig = img_data
+                # restore the image shape
+                data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
+                y.imshow(orig, cmap='gray')
+                plt.title(label)
+                y.axes.get_xaxis().set_visible(False)
+                y.axes.get_yaxis().set_visible(False)
         else: 
             label='empty'
             e = e + 1
-        
-        if num < 20:
-            y.imshow(orig, cmap='gray')
-            plt.title(label)
-            y.axes.get_xaxis().set_visible(False)
-            y.axes.get_yaxis().set_visible(False)
     
     print('\n empty images: ',e)
     print('\n full images: ',f)
     plt.show()
 
-# test_data = create_test_data()
-test_data = np.load(os.path.join(DATASET_DIR,'test_data.npy'))
-test_data = np.load(os.path.join(DATASET_DIR,'train_norm_data.npy'))
-test_data = np.load(os.path.join('augment/train/train_augm_data.npy'))
+if os.path.exists(os.path.join(DATASET_DIR,DATASET_NAME)):
+    test_data = np.load(os.path.join(DATASET_DIR,DATASET_NAME))
+    verify(test_data)
+else:
+    test_data = create_test_data()
 
-verify(test_data)
+
 

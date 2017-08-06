@@ -10,9 +10,9 @@ from tqdm import tqdm
 import dataset as data
 
 #import the cnn graphs
-import graphs.cnn_2layers as cnn2
-import graphs.cnn_6layers as cnn6
-import graphs.cnn_8layers as cnn8
+import graphs.cnn_2layers as conv2
+import graphs.cnn_6layers as conv6
+import graphs.cnn_8layers as conv8
 #import alexnet
 import graphs.alexnet as alexnet
 import graphs.resnext as resnext
@@ -34,9 +34,9 @@ IMG_SIZE = 50
 LR = 1e-3
 
 #models
-CNN2 = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, '2conv'))
-CNN6 = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, '6conv'))
-CNN8 = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, '8conv'))
+CNN2 = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'conv2'))
+CNN6 = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'conv6'))
+CNN8 = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'conv8'))
 ALEXNET = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'alexnet'))
 RESNEXT = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'resnext'))
 INCEPTION = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'inception'))
@@ -44,8 +44,8 @@ GOOGLENET = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'go
 CONVNET = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'convnet'))
 
 
-# dentro a {} mette LR, mentre nel secondo {} mette 8conv
-# MODEL_NAME = 'cnn-{}-{}.model'.format(IMG_SIZE, '8conv')
+# dentro a {} mette LR, mentre nel secondo {} mette conv8
+# MODEL_NAME = 'cnn-{}-{}.model'.format(IMG_SIZE, 'conv8')
 
 # create
 # train_data = data.create_train_data(IMG_SIZE)
@@ -98,49 +98,49 @@ test_y = [i[1] for i in test]
 #
 # print('models trained or loaded successfully')
 #
-# ''' #### CNN2 #### '''
-# #reset the graph
-# tf.reset_default_graph()
-# cnn2_convnet = cnn2.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR )
-# # tenserboard_dir not needed on mac or ubuntu
-# cnn2_model = tflearn.DNN(cnn2_convnet, tensorboard_dir='log')
-#
-# if os.path.exists(os.path.join('{}.meta'.format(CNN2))):
-#     cnn2_model.load(CNN2)
-#     print('model ',CNN2,' loaded!')
-# else:
-#     # TRAIN the network run_id is how you will find in tensorflow the model
-#     cnn2_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=1000, show_metric=True, run_id='cnn2')
-#     cnn2_model.save(CNN2)
-#     print('model ', CNN2 ,'created and saved')
-#
-#
-# ''' #### CNN6 #### '''
-# #reset the graph
-# tf.reset_default_graph()
-# cnn6_convnet = cnn6.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
-# cnn6_model = tflearn.DNN(cnn6_convnet, tensorboard_dir='log')
-#
-# if os.path.exists(os.path.join('{}.meta'.format(CNN6))):
-#     cnn6_model.load(CNN6)
-#     print('model ',CNN6,' loaded!')
-# else:
-#     # TRAIN the network run_id is how you will find in tensorflow the model
-#     cnn6_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='cnn6')
-#     cnn6_model.save(CNN6)
-#     print('model ', CNN6 ,'created and saved')
-#
+''' #### CNN2 #### '''
+#reset the graph
+tf.reset_default_graph()
+conv2_convnet = conv2.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR )
+# tenserboard_dir not needed on mac or ubuntu
+conv2_model = tflearn.DNN(conv2_convnet, tensorboard_dir='log')
+
+if os.path.exists(os.path.join('{}.meta'.format(CNN2))):
+    conv2_model.load(CNN2)
+    print('model ',CNN2,' loaded!')
+else:
+    # TRAIN the network run_id is how you will find in tensorflow the model
+    conv2_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=1000, show_metric=True, run_id='conv2')
+    conv2_model.save(CNN2)
+    print('model ', CNN2 ,'created and saved')
+
+
+''' #### CNN6 #### '''
+#reset the graph
+tf.reset_default_graph()
+conv6_convnet = conv6.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
+conv6_model = tflearn.DNN(conv6_convnet, tensorboard_dir='log')
+
+if os.path.exists(os.path.join('{}.meta'.format(CNN6))):
+    conv6_model.load(CNN6)
+    print('model ',CNN6,' loaded!')
+else:
+    # TRAIN the network run_id is how you will find in tensorflow the model
+    conv6_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='conv6')
+    conv6_model.save(CNN6)
+    print('model ', CNN6 ,'created and saved')
+
 # ''' #### CNN8 #### '''
 # #reset the graph
 # tf.reset_default_graph()
-# cnn8_convnet = cnn8.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
-# cnn8_model = tflearn.DNN(cnn8_convnet, tensorboard_dir='log')
+# conv8_convnet = conv8.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
+# conv8_model = tflearn.DNN(conv8_convnet, tensorboard_dir='log')
 # if os.path.exists(os.path.join('{}.meta'.format(CNN8))):
-#     cnn8_model.load(CNN8)
+#     conv8_model.load(CNN8)
 #     print('model ',CNN8,' loaded!')
 # else:
-#     cnn8_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='cnn8')
-#     cnn8_model.save(CNN8)
+#     conv8_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5000, show_metric=True, run_id='conv8')
+#     conv8_model.save(CNN8)
 #     print('model ',CNN8,' created and saved!')
 #
 #
@@ -154,7 +154,7 @@ test_y = [i[1] for i in test]
 #     alexnet_model.load(ALEXNET)
 #     print('model ',ALEXNET,' loaded!')
 # else:
-#     alexnet_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='alexnet')
+#     alexnet_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5000, show_metric=True, run_id='alexnet')
 #     alexnet_model.save(ALEXNET)
 #     print('model ',ALEXNET,' created and saved!')
 #
@@ -171,7 +171,7 @@ test_y = [i[1] for i in test]
 #     resnext_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5000, show_metric=True, run_id='resnext')
 #     resnext_model.save(RESNEXT)
 #     print('model ',RESNEXT,' created and saved!')
-
+#
 # ''' #### INCEPTION #### '''
 # #reset the graph
 # tf.reset_default_graph()
@@ -197,7 +197,7 @@ test_y = [i[1] for i in test]
 #     googlenet_model.load(GOOGLENET)
 #     print('model ',GOOGLENET,' loaded!')
 # else:
-#     googlenet_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='googlenet')
+#     googlenet_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5000, show_metric=True, run_id='googlenet')
 #     googlenet_model.save(GOOGLENET)
 #     print('model ',GOOGLENET,' created and saved!')
 #
@@ -231,19 +231,19 @@ print('test data loaded')
 #     # restore the image shape
 #     data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
 #     # the [0] is the return of the prediction and is the prob of the image being a cat
-#     model_cnn2_out = cnn2_model.predict([data])[0]
-#     # model_cnn6_out = cnn6_model.predict([data])[0]
-#     # model_cnn8_out = cnn8_model.predict([data])[0]
+#     model_conv2_out = conv2_model.predict([data])[0]
+#     # model_conv6_out = conv6_model.predict([data])[0]
+#     # model_conv8_out = conv8_model.predict([data])[0]
 #     # model_alexnet_out = alexnet_model.predict([data])[0]
 #
-#     # if np.argmax(model_cnn2_out) == 1: str_label_c='Dog' 
+#     # if np.argmax(model_conv2_out) == 1: str_label_c='Dog' 
 #     # else: str_label_c='Cat'
 #
 # #     if np.argmax(model_alexnet_out) == 1: str_label_a='Dog' 
 # #     else: str_label_a='Cat'
 #
 #     # y.imshow(orig, cmap='gray')
-#     # string = str_label_c,' ',model_cnn2_out,' - ',str_label_a,' ',model_alexnet_out
+#     # string = str_label_c,' ',model_conv2_out,' - ',str_label_a,' ',model_alexnet_out
 #     # print(string)
 #     # plt.title(string)
 #     # y.axes.get_xaxis().set_visible(False)

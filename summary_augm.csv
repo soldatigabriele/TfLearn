@@ -1,0 +1,6 @@
+dataset,model,pp,pv,pt,vp,vv,vt,perc_full,perc_empty,perc_tot
+agosto_data.npy,conv2,115,40,155,308,3685,3993,74.19,92.29,91.61
+test_data.npy,conv2,622,78,700,17,333,350,88.86,95.14,90.95
+agosto_data.npy,conv6,56,99,155,163,3830,3993,36.13,95.92,93.68
+test_data.npy,conv6,585,115,700,38,312,350,83.57,89.14,85.43
+che note?
