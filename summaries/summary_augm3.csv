@@ -1,0 +1,13 @@
+dataset,model,pp,pv,pt,vp,vv,vt,perc_full,perc_empty,perc_tot
+test_data.npy,alexnet,663,37,700,15,335,350,94.0,95.0,95.0
+test_data.npy,conv2,570,130,700,20,330,350,81.0,94.0,85.0
+test_data.npy,resnext,0,700,700,1,349,350,0.0,99.0,33.0
+test_data.npy,inception,0,700,700,0,350,350,0.0,100.0,33.0
+test_data.npy,googlenet,559,141,700,83,267,350,79.0,76.0,78.0
+test_data.npy,conv8,642,58,700,104,246,350,91.0,70.0,84.0
+agosto_data.npy,alexnet,139,16,155,426,3567,3993,89.0,89.0,89.0
+agosto_data.npy,conv2,84,71,155,152,3841,3993,54.0,96.0,94.0
+agosto_data.npy,resnext,0,155,155,0,3993,3993,0.0,100.0,96.0
+agosto_data.npy,inception,0,155,155,0,3993,3993,0.0,100.0,96.0
+agosto_data.npy,googlenet,121,34,155,1564,2429,3993,78.0,60.0,61.0
+agosto_data.npy,conv8,151,4,155,3471,522,3993,97.0,13.0,16.0
