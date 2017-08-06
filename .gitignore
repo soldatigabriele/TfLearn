@@ -1,8 +1,10 @@
 __pycache__/
 .DS_Store
+z_log_augm_fabio_100epochs/
 z_log_norm_fabio_100epochs/
 dataset/
 augment/
 log/
 models/
 typescript
+summaries.zip
