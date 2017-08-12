@@ -1,5 +1,6 @@
 __pycache__/
 .DS_Store
+cosedafare.txt
 z_log_augm_fabio_100epochs/
 z_log_norm_fabio_100epochs/
 dataset/

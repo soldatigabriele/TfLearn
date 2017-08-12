@@ -12,21 +12,12 @@ from tqdm import tqdm
 
 
 TRAIN_DIR ='dataset/base/training/'
-# TRAIN_DIR ='dataset/base/trying/'
+TRAIN_DIR ='dataset/base/trying/'
+# TRAIN_DIR ='../../Dropbox/Universita/Tesi/Tensorflow\ Dataset/Dataset_augmented/train/'
 TEST_DIR = 'dataset/base/test/'
 DATASET_DIR='dataset/npy/'
 
 IMG_SIZE = 50
-
-# # 2D grayscale data
-# def label_img(img):
-#     #split the name by . and take the third negative (dog or cat):
-#     # dog . 93 . png 
-#     # [-3] [-2] [-1]
-#     word_label = img.split('.')[-3]
-#     # praticamente vado a creare le label in formato one_hot
-#     if word_label == 'cat': return [1,0]
-#     elif word_label == 'dog':return[0,1]
 
 def norm_image(img):
     """
@@ -136,7 +127,7 @@ def create_train_data():
             
     shuffle(training_data)
     print('train_data length: ',len(training_data))
-    np.save(os.path.join(DATASET_DIR,'train_norm_data.npy'), training_data)
+    np.save(os.path.join(DATASET_DIR,'train_flipped_data.npy'), training_data)
     return training_data
 
 def create_test_data():
@@ -224,8 +215,8 @@ def verify(test_data):
 
 
 # create the training normalized data
-# train_data = create_train_data()
-# print('data created')
+train_data = create_train_data()
+print('data created')
 
 # train_data = np.load('dataset/npy/train_norm_data.npy')
 # train_data = np.load('dataset/npy/test_data.npy')

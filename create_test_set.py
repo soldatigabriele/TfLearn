@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 TEST_DIR = 'dataset/base/agosto/'
 DATASET_DIR='dataset/npy/'
-DATASET_NAME='agosto_data.npy'
+DATASET_NAME='train_flipped_data2.npy'
 
 IMG_SIZE = 50
 

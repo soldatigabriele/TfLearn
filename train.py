@@ -44,21 +44,9 @@ GOOGLENET = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'go
 CONVNET = os.path.join(MODEL_DIR,'cnn-{}-{}-{}.model'.format(IMG_SIZE, LR, 'convnet'))
 
 
-# dentro a {} mette LR, mentre nel secondo {} mette conv8
-# MODEL_NAME = 'cnn-{}-{}.model'.format(IMG_SIZE, 'conv8')
-
-# create
-# train_data = data.create_train_data(IMG_SIZE)
-# or load
+# load train data
 train_data = np.load(os.path.join(DATASET_DIR,'train_norm_data.npy'))
-
-# create
-# test_data = data.process_test_data(IMG_SIZE)
-# or load
-test_data = np.load(os.path.join(DATASET_DIR,'test_data.npy'))
-
 print('Data loaded')
-
 
 #prende tutte le entry tranne le ultime 500
 train = train_data[:-500]
@@ -75,61 +63,58 @@ test_x = np.array([i[0] for i in test]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 # takes the labels
 test_y = [i[1] for i in test]
 
-# checks for checkpoints
-# if os.path.exists(os.path.join(MODEL_DIR,'{}.meta'.format(MODEL_NAME))):
 
 ''' NETWORKS '''
 
-# ''' #### CONVNET #### '''
-# # reset the graph
+''' #### CONVNET #### '''
+# reset the graph
+tf.reset_default_graph()
+
+convnet_cnn = conv.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
+convnet_model = tflearn.DNN(convnet_cnn, tensorboard_verbose=3, tensorboard_dir='log')
+
+#check if the model already exists, otherwise it trains it
+if os.path.exists(os.path.join('{}.meta'.format(CONVNET))):
+    convnet_model.load(CONVNET)
+    print('model ',CONVNET,' loaded!')
+else:
+    convnet_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5000, show_metric=True, run_id='convnet')
+    convnet_model.save(CONVNET)
+    print('model ',CONVNET,' created and saved!')
+
+
+# ''' #### CNN2 #### '''
+# #reset the graph
 # tf.reset_default_graph()
+# conv2_convnet = conv2.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR )
+# # tenserboard_dir not needed on mac or ubuntu
+# conv2_model = tflearn.DNN(conv2_convnet, tensorboard_dir='log')
 #
-# convnet_cnn = conv.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
-# convnet_model = tflearn.DNN(convnet_cnn, tensorboard_verbose=3, tensorboard_dir='log')
-#
-# if os.path.exists(os.path.join('{}.meta'.format(CONVNET))):
-#     convnet_model.load(CONVNET)
-#     print('model ',CONVNET,' loaded!')
+# if os.path.exists(os.path.join('{}.meta'.format(CNN2))):
+#     conv2_model.load(CNN2)
+#     print('model ',CNN2,' loaded!')
 # else:
-#     convnet_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5000, show_metric=True, run_id='convnet')
-#     convnet_model.save(CONVNET)
-#     print('model ',CONVNET,' created and saved!')
+#     # TRAIN the network run_id is how you will find in tensorflow the model
+#     conv2_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=1000, show_metric=True, run_id='conv2')
+#     conv2_model.save(CNN2)
+#     print('model ', CNN2 ,'created and saved')
 #
 #
-# print('models trained or loaded successfully')
+# ''' #### CNN6 #### '''
+# #reset the graph
+# tf.reset_default_graph()
+# conv6_convnet = conv6.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
+# conv6_model = tflearn.DNN(conv6_convnet, tensorboard_dir='log')
 #
-''' #### CNN2 #### '''
-#reset the graph
-tf.reset_default_graph()
-conv2_convnet = conv2.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR )
-# tenserboard_dir not needed on mac or ubuntu
-conv2_model = tflearn.DNN(conv2_convnet, tensorboard_dir='log')
-
-if os.path.exists(os.path.join('{}.meta'.format(CNN2))):
-    conv2_model.load(CNN2)
-    print('model ',CNN2,' loaded!')
-else:
-    # TRAIN the network run_id is how you will find in tensorflow the model
-    conv2_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=1000, show_metric=True, run_id='conv2')
-    conv2_model.save(CNN2)
-    print('model ', CNN2 ,'created and saved')
-
-
-''' #### CNN6 #### '''
-#reset the graph
-tf.reset_default_graph()
-conv6_convnet = conv6.network([None,IMG_SIZE,IMG_SIZE,1], 'input', LR)
-conv6_model = tflearn.DNN(conv6_convnet, tensorboard_dir='log')
-
-if os.path.exists(os.path.join('{}.meta'.format(CNN6))):
-    conv6_model.load(CNN6)
-    print('model ',CNN6,' loaded!')
-else:
-    # TRAIN the network run_id is how you will find in tensorflow the model
-    conv6_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='conv6')
-    conv6_model.save(CNN6)
-    print('model ', CNN6 ,'created and saved')
-
+# if os.path.exists(os.path.join('{}.meta'.format(CNN6))):
+#     conv6_model.load(CNN6)
+#     print('model ',CNN6,' loaded!')
+# else:
+#     # TRAIN the network run_id is how you will find in tensorflow the model
+#     conv6_model.fit({'input':X},{'targets':Y}, n_epoch=100, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=500, show_metric=True, run_id='conv6')
+#     conv6_model.save(CNN6)
+#     print('model ', CNN6 ,'created and saved')
+#
 # ''' #### CNN8 #### '''
 # #reset the graph
 # tf.reset_default_graph()
@@ -202,66 +187,4 @@ else:
 #     print('model ',GOOGLENET,' created and saved!')
 #
 
-# ''' ########## TRAINING #########'''
-# TRAIN the network run_id is how you will find in tensorflow the model
-#model.fit({'input':X},{'targets':Y}, n_epoch=2, validation_set=({'input':test_x},{'targets':test_y}), snapshot_step=5, show_metric=True, run_id=MODEL_NAME)
-
-''' ########## SAVE MODEL #########'''
-# model.save(os.path.join(MODEL_DIR,MODEL_NAME))
-
-
-# import matplotlib.pyplot as plt
-
-# test_data = process_test_data()
-test_data = np.load(os.path.join(DATASET_DIR,'test_data.npy'))
-print('test data loaded')
-
-''' ########## PLOT DATA and SHOW PREDICTIONS ##########'''
-#plot the data
-# fig = plt.figure()
-
-# for num, data in enumerate(test_data[:12]):
-#     # cat [1,0] dog [0,1]
-#     img_num = data[1]
-#     img_data = data[0]
-#
-#     # 3 by 4 and the numbur is the number plus 1 (because array starts from 0)
-#     # y = fig.add_subplot(3,4,num+1)
-#     orig = img_data
-#     # restore the image shape
-#     data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
-#     # the [0] is the return of the prediction and is the prob of the image being a cat
-#     model_conv2_out = conv2_model.predict([data])[0]
-#     # model_conv6_out = conv6_model.predict([data])[0]
-#     # model_conv8_out = conv8_model.predict([data])[0]
-#     # model_alexnet_out = alexnet_model.predict([data])[0]
-#
-#     # if np.argmax(model_conv2_out) == 1: str_label_c='Dog' 
-#     # else: str_label_c='Cat'
-#
-# #     if np.argmax(model_alexnet_out) == 1: str_label_a='Dog' 
-# #     else: str_label_a='Cat'
-#
-#     # y.imshow(orig, cmap='gray')
-#     # string = str_label_c,' ',model_conv2_out,' - ',str_label_a,' ',model_alexnet_out
-#     # print(string)
-#     # plt.title(string)
-#     # y.axes.get_xaxis().set_visible(False)
-#     # y.axes.get_yaxis().set_visible(False)
-# # plt.show()
-# # # write
-# # with open('submission-file.csv','w') as f:
-# #     f.write('id,label\n')
-# #
-# # with open('submission-file.csv','a') as f:
-# #     for data in tqdm(test_data):
-# #         img_num = data[1]
-# #         img_data = data[0]
-# #         orig = img_data
-# #         data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
-# #         model_out = model.predict([data])[0]
-# #         f.write('{},{}\n'.format(img_num, model_out[1]))
-
-
-
-
+print('all models trained or loaded successfully')
