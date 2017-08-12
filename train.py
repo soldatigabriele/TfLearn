@@ -64,7 +64,8 @@ test_x = np.array([i[0] for i in test]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 test_y = [i[1] for i in test]
 
 
-''' NETWORKS '''
+''' TRAINING '''
+# Training: Uncomment the models you want to train
 
 ''' #### CONVNET #### '''
 # reset the graph
