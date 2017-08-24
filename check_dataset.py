@@ -1,5 +1,4 @@
 import matplotlib
-# matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import tflearn
 import tensorflow as tf
@@ -9,12 +8,10 @@ import os
 from random import shuffle
 from tqdm import tqdm
 
-
 DATASET_DIR='dataset/npy/'
 DATASET_NAME='train_flipped_data.npy'
 
 IMG_SIZE = 50
-
 
 def verify(test_data):
     #plot the data
@@ -48,7 +45,3 @@ def verify(test_data):
 
 test_data = np.load(os.path.join(DATASET_DIR,DATASET_NAME))
 verify(test_data)
-
-
-
-

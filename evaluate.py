@@ -22,9 +22,7 @@ import graphs.convnet as conv
 GRAPHS_DIR='graphs/'
 #have to be in the same directory of the script or terminal
 DATASET_DIR='dataset/validation/'
-# MODEL_DIR='models/'
-# MODEL_DIR='models_augm/'
-MODEL_DIR='models_normal/'
+MODEL_DIR='models/'
 FILE_NAME='summary_norm.csv'
 NOTES = 'note?'
 
