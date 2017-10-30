@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/gabri/Desktop/script/models_augm/cnn-50-0.001-conv6.model"
+all_model_checkpoint_paths: "/home/gabri/Desktop/script/models_augm/cnn-50-0.001-conv6.model"

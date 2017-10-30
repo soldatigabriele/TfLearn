@@ -36,8 +36,17 @@ n = 5
 
 def network(img_shape, name, LR):
 
+    img_prep = ImagePreprocessing()
+    img_prep.add_featurewise_zero_center()
+    img_prep.add_featurewise_stdnorm()
+    #
+    # # Real-time data augmentation
+    img_aug = ImageAugmentation()
+    img_aug.add_random_blur (sigma_max=3.0)
+    img_aug.add_random_90degrees_rotation(rotations=[0, 2])    
+
     # Building Residual Network
-    network = tflearn.input_data(shape=img_shape, name=name )
+    network = tflearn.input_data(shape=img_shape, name=name, data_preprocessing=img_prep, data_augmentation=img_aug )
     network = tflearn.conv_2d(network, 16, 3, regularizer='L2', weight_decay=0.0001)
     network = tflearn.resnext_block(network, n, 16, 32)
     network = tflearn.resnext_block(network, 1, 32, 32, downsample=True)

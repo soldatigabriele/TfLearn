@@ -89,7 +89,16 @@ dropout_keep_prob = 0.8
 
 def network(img_shape, name, LR):
 
-    network = input_data(shape=img_shape, name=name ) 
+    img_prep = ImagePreprocessing()
+    img_prep.add_featurewise_zero_center()
+    img_prep.add_featurewise_stdnorm()
+    #
+    # # Real-time data augmentation
+    img_aug = ImageAugmentation()
+    img_aug.add_random_blur (sigma_max=3.0)
+    img_aug.add_random_90degrees_rotation(rotations=[0, 2])    
+
+    network = input_data(shape=img_shape, name=name, data_preprocessing=img_prep, data_augmentation=img_aug  ) 
     conv1a_3_3 = relu(batch_normalization(conv_2d(network, 32, 3, strides=2, bias=False, padding='VALID',activation=None,name='Conv2d_1a_3x3')))
     conv2a_3_3 = relu(batch_normalization(conv_2d(conv1a_3_3, 32, 3, bias=False, padding='VALID',activation=None, name='Conv2d_2a_3x3')))
     conv2b_3_3 = relu(batch_normalization(conv_2d(conv2a_3_3, 64, 3, bias=False, activation=None, name='Conv2d_2b_3x3')))

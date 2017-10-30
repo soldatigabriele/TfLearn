@@ -9,20 +9,22 @@ from tqdm import tqdm
 import dataset as data
 
 #import the cnn graphs
-import graphs.cnn_2layers as conv2
-import graphs.cnn_6layers as conv6
-import graphs.cnn_8layers as conv8
+import graphs_norm.cnn_2layers as conv2
+import graphs_norm.cnn_6layers as conv6
+import graphs_norm.cnn_8layers as conv8
 #import alexnet
-import graphs.alexnet as alexnet
-import graphs.resnext as resnext
-import graphs.inception as inception
-import graphs.googlenet as googlenet
-import graphs.convnet as conv
+import graphs_norm.alexnet as alexnet
+import graphs_norm.resnext as resnext
+import graphs_norm.inception as inception
+import graphs_norm.googlenet as googlenet
+import graphs_norm.convnet as conv
 
-GRAPHS_DIR='graphs/'
+GRAPHS_DIR='graphs_norm/'
 #have to be in the same directory of the script or terminal
 DATASET_DIR='dataset/validation/'
-MODEL_DIR='models/'
+# MODEL_DIR='models/'
+# MODEL_DIR='models_augm/'
+MODEL_DIR='models_norm/'
 FILE_NAME='summary_norm.csv'
 NOTES = 'note?'
 

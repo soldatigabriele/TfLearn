@@ -7,7 +7,7 @@ from random import shuffle
 from tqdm import tqdm
 
 TRAIN_DIR ='dataset/base/training/'
-# TRAIN_DIR ='dataset/base/trying/'
+# TRAIN_DIR ='dataset/base/divise/'
 DATASET_DIR='dataset/npy/'
 DATASET_NAME='training_data.npy'
 IMG_SIZE = 50

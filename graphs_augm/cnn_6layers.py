@@ -10,8 +10,17 @@ from tflearn.data_preprocessing import ImagePreprocessing
 from tflearn.data_augmentation import ImageAugmentation
 
 def network(img_shape, name, LR):
+    # # Real-time data preprocessing
+    img_prep = ImagePreprocessing()
+    img_prep.add_featurewise_zero_center()
+    img_prep.add_featurewise_stdnorm()
+    #
+    # # Real-time data augmentation
+    img_aug = ImageAugmentation()
+    img_aug.add_random_blur (sigma_max=3.0)
+    img_aug.add_random_90degrees_rotation(rotations=[0, 2])    
     
-    network = input_data(shape=img_shape, name=name )
+    network = input_data(shape=img_shape, name=name, data_preprocessing=img_prep, data_augmentation=img_aug  )
 
     network = conv_2d(network, 32, 2, activation='relu')
     network = max_pool_2d(network,2)

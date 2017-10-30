@@ -14,8 +14,17 @@ from tflearn.data_augmentation import ImageAugmentation
 
 def network(img_shape, name, LR):
 
+    img_prep = ImagePreprocessing()
+    img_prep.add_featurewise_zero_center()
+    img_prep.add_featurewise_stdnorm()
+    #
+    # # Real-time data augmentation
+    img_aug = ImageAugmentation()
+    img_aug.add_random_blur (sigma_max=3.0)
+    img_aug.add_random_90degrees_rotation(rotations=[0, 2])    
+
     # Building 'AlexNet'
-    network = input_data(shape=img_shape, name=name )
+    network = input_data(shape=img_shape, name=name, data_preprocessing=img_prep, data_augmentation=img_aug  )
     network = conv_2d(network, 96, 11, strides=4, activation='relu')
     network = max_pool_2d(network, 3, strides=2)
     network = local_response_normalization(network)
